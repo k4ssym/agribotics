@@ -2,15 +2,15 @@
   "name": "material-dashboard",
   "version": "3.1.0",
   "description": "Freebie Dashboard for Bootstrap 5",
-  "main": "pages/dashboard.html",
+  "main": "server.js",
   "directories": {
     "example": "root"
   },
   "scripts": {
-    "open-app": "gulp open-app",
-    "start": "npm run open-app",
+    "start": "node server.js", 
+    "open-app": "gulp open-app", 
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "gulp-watch"
+    "watch": "gulp-watch"     
   },
   "repository": {
     "type": "git",
@@ -41,10 +41,13 @@
     "gulp-autoprefixer": "^7.0.1",
     "gulp-clean": "^0.4.0",
     "gulp-install": "^1.1.0",
+    "gulp-open": "^3.0.1",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-open": "^3.0.1",
     "sass": "^1.49.9"
   },
-  "homepage": "http://creative-tim.com/product/material-dashboard"
+  "homepage": "http://creative-tim.com/product/material-dashboard",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
 }
