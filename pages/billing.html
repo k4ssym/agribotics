@@ -300,83 +300,219 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+        <div class="container-fluid py-4">
+          <div class="row">
+            <!-- Карта -->
+            <div class="col-md-7 mt-4">
+              <div class="card">
+                <div class="card-header pb-0 px-3">
+                  <h6 class="mb-0">Локация устройства</h6>
+                </div>
+                <div class="card-body pt-4 p-3">
+                  <div class="google-map-container">
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52809972.58214532!2d-161.4707710359371!3d36.11140290769841!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2z0KHQvtC10LTQuNC90LXQvdC90YvQtSDQqNGC0LDRgtGLINCQ0LzQtdGA0LjQutC4!5e0!3m2!1sru!2skz!4v1727547116273!5m2!1sru!2skz" 
+                      width="100%" 
+                      height="450" 
+                      style="border:0;" 
+                      allowfullscreen="" 
+                      loading="lazy" 
+                      referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <style>
+              /* Общие стили для чата */
+              .chat-container {
+                height: 400px;
+                overflow-y: auto;
+                border-radius: 12px;
+                padding: 20px;
+                background-color: #ffffff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              }
+          
+              .chat-message {
+                margin-bottom: 15px;
+                display: flex;
+                align-items: flex-end;
+                opacity: 0;
+                animation: fadeIn 0.3s forwards;
+              }
+          
+              /* Сообщения пользователя */
+              .user-message {
+                justify-content: flex-end;
+              }
+          
+              .user-message .message-content {
+                background-color: #009218;
+                color: #fff;
+                padding: 12px 18px;
+                border-radius: 20px 20px 0px 20px;
+                box-shadow: 0 2px 6px rgba(23, 251, 38, 0.5);
+              }
+          
+              /* Сообщения ИИ */
+              .ai-message {
+                justify-content: flex-start;
+              }
+          
+              .ai-message .message-content {
+                background-color: #f0f0f0;
+                color: #333;
+                padding: 12px 18px;
+                border-radius: 20px 20px 20px 0px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+              }
+          
+              /* Стили для аватара ИИ */
+              .avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 10px;
+              }
+          
+              /* Ввод и отправка сообщения */
+              .input-group {
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+              }
+          
+              .chat-input {
+                flex-grow: 1;
+                padding: 12px 18px;
+                border-radius: 25px;
+                border: 1px solid #dcdcdc;
+                box-shadow: none;
+                font-size: 14px;
+                transition: all 0.3s ease;
+                height: 45px; /* Высота поля ввода */
+              }
+          
+              .chat-input:focus {
+                border-color: #0066ff;
+                outline: none;
+              }
+          
+              .btn-send {
+                background: linear-gradient(135deg, #00c11d, #f4ca23);
+                color: white;
+                border: none;
+                border-radius: 25px;
+                padding: 12px 24px;
+                margin-left: 10px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                height: 45px; /* Высота кнопки совпадает с высотой поля ввода */
+                display: flex;
+                align-items: center;
+              }
+          
+              .btn-send:hover {
+                background: linear-gradient(135deg, #0072ff, #00c6ff);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 118, 255, 0.4);
+              }
+          
+              /* Анимация появления сообщений */
+              @keyframes fadeIn {
+                from {
+                  opacity: 0;
+                  transform: translateY(20px);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="col-md-5 mt-4">
+              <div class="card h-100">
+                <div class="card-header pb-0 px-3 d-flex align-items-center">
+                  <div class="avatar">
+                    <img src="ai.png" alt="AI Assistant">
+                  </div>
+                  <h6 class="mb-0" style="margin-left: 10px;">Чат с АИ ассистентом</h6>
+                </div>
+                <div class="card-body pt-4 p-3" style="background-color: #f8f9fa;">
+                  <div class="chat-container" id="chat-container">
+                    <!-- Сообщение от ИИ ассистента (начальное) -->
+                    <div class="chat-message ai-message">
+                      <div class="avatar">
+                        <img src="ai.png" alt="AI Assistant">
+                      </div>
+                      <div class="message-content">
+                        <p>Привет! Я твой ИИ ассистент. Как я могу помочь?</p>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- Поле ввода для чата -->
+                  <div class="input-group">
+                    <input type="text" id="messageInput" class="form-control chat-input" placeholder="Введите сообщение..." aria-label="Сообщение">
+                    <button class="btn btn-send" type="button" onclick="sendMessage()">Отправить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <script>
+              async function sendMessage() {
+                const messageInput = document.getElementById('messageInput');
+                const chatContainer = document.getElementById('chat-container');
+                const userMessage = messageInput.value;
+          
+                if (!userMessage.trim()) return; // Don't send empty messages
+          
+                // Отображение сообщения пользователя
+                const userMessageHTML = `
+                  <div class="chat-message user-message">
+                    <div class="message-content">
+                      <p>${userMessage}</p>
+                    </div>
+                  </div>
+                `;
+                chatContainer.innerHTML += userMessageHTML;
+                messageInput.value = ''; // Очистка поля ввода
+          
+                // Отправка сообщения на бэкенд
+                const response = await fetch('/send-message', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ message: userMessage }),
+                });
+          
+                const data = await response.json();
+                const aiMessage = data.reply;
+          
+                // Отображение ответа ИИ
+                const aiMessageHTML = `
+                  <div class="chat-message ai-message">
+                    <div class="avatar">
+                      <img src="ai.png" alt="AI Assistant">
+                    </div>
+                    <div class="message-content">
+                      <p>${aiMessage}</p>
+                    </div>
+                  </div>
+                `;
+                chatContainer.innerHTML += aiMessageHTML;
+          
+                // Прокрутка чата вниз
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+              }
+            </script> 
   </main>
-  <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="material-icons py-2">settings</i>
-    </a>
-    <div class="card shadow-lg">
-      <div class="card-header pb-0 pt-3">
-        <div class="float-start">
-          <h5 class="mt-3 mb-0">Material UI Configurator</h5>
-          <p>See our dashboard options.</p>
-        </div>
-        <div class="float-end mt-4">
-          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-            <i class="material-icons">clear</i>
-          </button>
-        </div>
-        <!-- End Toggle Button -->
-      </div>
-      <hr class="horizontal dark my-1">
-      <div class="card-body pt-sm-3 pt-0">
-        <!-- Sidebar Backgrounds -->
-        <div>
-          <h6 class="mb-0">Sidebar Colors</h6>
-        </div>
-        <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors my-2 text-start">
-            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
-          </div>
-        </a>
-        <!-- Sidenav Type -->
-        <div class="mt-3">
-          <h6 class="mb-0">Sidenav Type</h6>
-          <p class="text-sm">Choose between 2 different sidenav types.</p>
-        </div>
-        <div class="d-flex">
-          <button class="btn bg-gradient-dark px-3 mb-2 active" data-class="bg-gradient-dark" onclick="sidebarType(this)">Dark</button>
-          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-transparent" onclick="sidebarType(this)">Transparent</button>
-          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
-        </div>
-        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-        <!-- Navbar Fixed -->
-        <div class="mt-3 d-flex">
-          <h6 class="mb-0">Navbar Fixed</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-          </div>
-        </div>
-        <hr class="horizontal dark my-3">
-        <div class="mt-2 d-flex">
-          <h6 class="mb-0">Light / Dark</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
-          </div>
-        </div>
-        <hr class="horizontal dark my-sm-4">
-        <a class="btn bg-gradient-info w-100" href="https://www.creative-tim.com/product/material-dashboard-pro">Free Download</a>
-        <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard">View documentation</a>
-        <div class="w-100 text-center">
-          <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
-          <h6 class="mt-3">Thank you for sharing!</h6>
-          <a href="https://twitter.com/intent/tweet?text=Check%20Material%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-          </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/material-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
